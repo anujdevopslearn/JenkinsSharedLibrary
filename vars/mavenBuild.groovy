@@ -2,10 +2,13 @@ def call(Map config = [:]){
     def gitURL = config.gitURL
     def productType = config.productType
     def pomfileName = config.pomfileName
+    def containerName = config.containerName
+    def utils = new utils()
     pipeline {
         agent any
         environment {
             gitBranch = "${env.BRANCH_NAME}"
+            tag = "1.0.${BUILD_NUMBER}"
         }
         stages{
             stage("Code Checkout"){
@@ -31,9 +34,7 @@ def call(Map config = [:]){
                 }
                 steps{
                     script {
-                        sh """
-                            echo "Docker Image Build"
-                        """
+                        utils.dockerImageBuild(containerName, tag)
                     }
                 }
             }
