@@ -1,11 +1,11 @@
 def call(Map config = [:]){
     def gitURL = config.gitURL
     def productType = config.productType
+    def pomfileName = config.pomfileName
     pipeline {
         agent any
         environment {
             gitBranch = "${env.BRANCH_NAME}"
-            pomfileName = config.pomfileName
         }
         stages{
             stage("Code Checkout"){
