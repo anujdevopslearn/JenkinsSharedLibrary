@@ -18,7 +18,7 @@ def call(Map config = [:]){
                     script {
                         sh """
                             ls -lart
-                            mvn clean install
+                            mvn clean install -f ${pomfileName}
                         """
                     }
                 }
