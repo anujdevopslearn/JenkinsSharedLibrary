@@ -8,3 +8,14 @@ def dockerImageBuild(containerName, tag){
     }
     echo "Image build complete"
 }
+
+def kubernetesDeploy(){
+    withCredentials([file(credentialsId: 'SERVICEACCOUNT', variable: 'SERVICEACCOUNT')]) {
+        sh """
+            echo $SERVICEACCOUNT > creds.json
+            gcloud auth activate-service-account --key-file=creds.json
+            gcloud auth list
+            gcloud config set project project-7-418106
+        """
+    }   
+}
