@@ -12,10 +12,12 @@ def dockerImageBuild(containerName, tag){
 def kubernetesDeploy(){
     withCredentials([file(credentialsId: 'SERVICEACCOUNT', variable: 'SERVICEACCOUNT')]) {
         sh """
-            echo $SERVICEACCOUNT > creds.json
-            gcloud auth activate-service-account --key-file=creds.json
+            echo $SERVICEACCOUNT
+            gcloud auth activate-service-account --key-file=$SERVICEACCOUNT
             gcloud auth list
             gcloud config set project project-7-418106
+            gcloud container clusters get-credentials jenkins-cd --zone asia-south1-c --project project-7-418106
+            kubectl get node
         """
     }   
 }
