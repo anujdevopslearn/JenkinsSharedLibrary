@@ -37,6 +37,18 @@ def call(Map config = [:]){
                     }
                 }
             }
+            stage("Kubernetes Deployment"){
+                when {
+                    expression {
+                        productType == "docker"
+                    }
+                }
+                steps{
+                    script {
+                        utils.kubernetesDeploy()
+                    }
+                }
+            }
         }
     }
 }
